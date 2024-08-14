@@ -772,7 +772,7 @@ class MatchOp(IRDLOperation):
 
     ops = opt_prop_def(ArrayAttr[StringAttr])
     # interface = opt_prop_def(EnumAttribute[StrEnum])
-    op_attrs = opt_prop_def(DictionaryAttr)
+    attributes_ = opt_prop_def(DictionaryAttr)
     filter_result_types = opt_prop_def(TypeAttribute)
     filter_operand_types = opt_prop_def(TypeAttribute)
 
@@ -784,7 +784,7 @@ class MatchOp(IRDLOperation):
         target: SSAValue,
         ops: Sequence[str] | ArrayAttr[StringAttr] | None = None,
         # interface: StrEnum | EnumAttribute[StrEnum] | None = None,
-        op_attrs: dict[str, Attribute] | DictionaryAttr | None = None,
+        attributes: dict[str, Attribute] | DictionaryAttr | None = None,
         filter_result_types: TypeAttribute | None = None,
         filter_operand_types: TypeAttribute | None = None,
     ):
@@ -792,13 +792,13 @@ class MatchOp(IRDLOperation):
             ops = ArrayAttr([StringAttr(op) for op in ops])
         # if isinstance(interface, StrEnum):
         #     interface = EnumAttribute(interface)
-        if isinstance(op_attrs, Mapping):
-            op_attrs = DictionaryAttr(op_attrs)
+        if isinstance(attributes, Mapping):
+            attributes = DictionaryAttr(attributes)
         super().__init__(
             properties={
                 "ops": ops,
                 # "interface": interface,
-                "op_attrs": op_attrs,
+                "attributes": attributes,
                 "filter_result_types": filter_result_types,
                 "filter_operand_types": filter_operand_types,
             },
